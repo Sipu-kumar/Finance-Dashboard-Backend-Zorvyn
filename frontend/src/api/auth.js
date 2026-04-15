@@ -26,6 +26,27 @@ export async function loginUser(email, password) {
 }
 
 /**
+ * GET /users/me — fetch the current user's profile (name, email, role)
+ * @returns {Promise<{ name: string, email: string, role: string }>}
+ */
+export async function fetchCurrentUser() {
+  const token = localStorage.getItem('jwt_token');
+  const response = await fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch user profile.');
+  }
+
+  return response.json();
+}
+
+/**
  * POST /users  (signup / register)
  * @param {{ fullName: string, email: string, password: string }} data
  * @returns {Promise<object>} created user

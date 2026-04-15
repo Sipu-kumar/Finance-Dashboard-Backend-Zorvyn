@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from '../api/auth';
+import { loginUser, fetchCurrentUser } from '../api/auth';
 
 // Eye icons
 const EyeOpenIcon = () => (
@@ -43,9 +43,21 @@ export default function Login() {
 
     setLoading(true);
     try {
+      // 1. Get the JWT token
       const token = await loginUser(email.trim(), password);
       localStorage.setItem('jwt_token', token);
       localStorage.setItem('user_email', email.trim());
+
+      // 2. Fetch user profile to store role
+      try {
+        const profile = await fetchCurrentUser();
+        localStorage.setItem('user_role', profile.role || 'VIEWER');
+        localStorage.setItem('user_name', profile.name || '');
+      } catch {
+        // If /users/me fails, default to VIEWER — don't block login
+        localStorage.setItem('user_role', 'VIEWER');
+      }
+
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');
