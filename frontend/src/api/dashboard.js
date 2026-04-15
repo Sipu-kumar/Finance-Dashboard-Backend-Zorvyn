@@ -18,10 +18,6 @@ export async function fetchDashboardSummary() {
 
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) {
-      // Token expired or invalid — clear and redirect
-      localStorage.removeItem('jwt_token');
-      localStorage.removeItem('user_email');
-      window.location.href = '/login';
       throw new Error('Session expired. Please login again.');
     }
     throw new Error('Failed to load dashboard data.');

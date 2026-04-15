@@ -18,8 +18,10 @@ export async function loginUser(email, password) {
     throw new Error(errorText || 'Invalid email or password');
   }
 
-  // Backend returns plain JWT string
-  const token = await response.text();
+  // Backend returns JWT string (may be wrapped in JSON quotes)
+  let token = await response.text();
+  // Strip surrounding quotes if present (Spring Boot wraps String returns in JSON quotes)
+  token = token.replace(/^"|"$/g, '').trim();
   return token;
 }
 
