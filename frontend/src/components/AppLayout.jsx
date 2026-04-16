@@ -56,7 +56,7 @@ const Icons = {
 const navItems = [
   { icon: Icons.dashboard,  label: 'Dashboard', path: '/dashboard' },
   { icon: Icons.records,    label: 'Records',   path: '/records'   },
-  { icon: Icons.analytics,  label: 'Analytics', path: '#' },
+  { icon: Icons.analytics,  label: 'Reports',   path: '/reports'   },
   { icon: Icons.performance,label: 'Performance', path: '#' },
   { icon: Icons.payment,    label: 'Payment',   path: '#' },
 ];

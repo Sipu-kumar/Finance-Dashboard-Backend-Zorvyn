@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { loginUser, fetchCurrentUser } from '../api/auth';
 
 // Eye icons
@@ -28,11 +28,21 @@ const FinanceIcon = () => (
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [sessionMsg, setSessionMsg] = useState('');
+
+  // Show session expired message if redirected from protected page
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('session') === 'expired') {
+      setSessionMsg('Your session has expired. Please login again.');
+    }
+  }, [location.search]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,6 +88,12 @@ export default function Login() {
           <h1>Sign In</h1>
           <p>Welcome back! Please enter your details.</p>
         </div>
+
+        {sessionMsg && (
+          <div className="alert alert-warning" style={{ marginBottom: '16px' }}>
+            ⚠️ {sessionMsg}
+          </div>
+        )}
 
         {error && (
           <div className="alert alert-error" style={{ marginBottom: '20px' }}>

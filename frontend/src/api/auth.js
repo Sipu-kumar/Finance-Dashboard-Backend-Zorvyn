@@ -7,15 +7,23 @@ const BASE_URL = 'http://localhost:8080';
  * @returns {Promise<string>} JWT token
  */
 export async function loginUser(email, password) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
+  let response;
+  try {
+    response = await fetch(`${BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch (err) {
+    throw new Error('Unable to connect to the server. Please make sure the backend is running.');
+  }
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || 'Invalid email or password');
+    if (response.status === 401) {
+      throw new Error('Invalid email or password.');
+    }
+    const errorText = await response.text().catch(() => '');
+    throw new Error(errorText || 'Login failed. Please try again.');
   }
 
   // Backend returns JWT string (may be wrapped in JSON quotes)
@@ -31,15 +39,23 @@ export async function loginUser(email, password) {
  */
 export async function fetchCurrentUser() {
   const token = localStorage.getItem('jwt_token');
-  const response = await fetch(`${BASE_URL}/users/me`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  });
+  let response;
+  try {
+    response = await fetch(`${BASE_URL}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  } catch (err) {
+    throw new Error('Unable to connect to the server.');
+  }
 
   if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      throw new Error('SESSION_EXPIRED');
+    }
     throw new Error('Failed to fetch user profile.');
   }
 
@@ -52,14 +68,19 @@ export async function fetchCurrentUser() {
  * @returns {Promise<object>} created user
  */
 export async function registerUser({ fullName, email, password }) {
-  const response = await fetch(`${BASE_URL}/users`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: fullName, email, password }),
-  });
+  let response;
+  try {
+    response = await fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: fullName, email, password }),
+    });
+  } catch (err) {
+    throw new Error('Unable to connect to the server. Please make sure the backend is running.');
+  }
 
   if (!response.ok) {
-    const errorText = await response.text();
+    const errorText = await response.text().catch(() => '');
     throw new Error(errorText || 'Registration failed. Please try again.');
   }
 

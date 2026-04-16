@@ -9,17 +9,34 @@ function getAuthHeaders() {
 }
 
 /**
+ * Handle session expiry — clear storage and redirect to login
+ */
+function handleSessionExpired() {
+  localStorage.removeItem('jwt_token');
+  localStorage.removeItem('user_email');
+  localStorage.removeItem('user_role');
+  localStorage.removeItem('user_name');
+  window.location.href = '/login?session=expired';
+}
+
+/**
  * GET /records — fetch all records for the current user
  */
 export async function fetchRecords() {
-  const response = await fetch(`${BASE_URL}/records`, {
-    method: 'GET',
-    headers: getAuthHeaders(),
-  });
+  let response;
+  try {
+    response = await fetch(`${BASE_URL}/records`, {
+      method: 'GET',
+      headers: getAuthHeaders(),
+    });
+  } catch (err) {
+    throw new Error('Unable to connect to the server. Please make sure the backend is running.');
+  }
 
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) {
-      throw new Error('Unauthorized. Please login again.');
+      handleSessionExpired();
+      throw new Error('Session expired. Please login again.');
     }
     throw new Error('Failed to load records.');
   }
@@ -32,17 +49,23 @@ export async function fetchRecords() {
  * @param {{ amount: number, type: string, category: string, date: string, notes: string }} record
  */
 export async function createRecord(record) {
-  const response = await fetch(`${BASE_URL}/records`, {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(record),
-  });
+  let response;
+  try {
+    response = await fetch(`${BASE_URL}/records`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(record),
+    });
+  } catch (err) {
+    throw new Error('Unable to connect to the server. Please make sure the backend is running.');
+  }
 
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) {
-      throw new Error('You do not have permission to add records.');
+      handleSessionExpired();
+      throw new Error('Session expired. Please login again.');
     }
-    const errorText = await response.text();
+    const errorText = await response.text().catch(() => '');
     throw new Error(errorText || 'Failed to add record.');
   }
 
@@ -54,14 +77,20 @@ export async function createRecord(record) {
  * @param {number} id
  */
 export async function deleteRecord(id) {
-  const response = await fetch(`${BASE_URL}/records/${id}`, {
-    method: 'DELETE',
-    headers: getAuthHeaders(),
-  });
+  let response;
+  try {
+    response = await fetch(`${BASE_URL}/records/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+  } catch (err) {
+    throw new Error('Unable to connect to the server. Please make sure the backend is running.');
+  }
 
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) {
-      throw new Error('You do not have permission to delete records.');
+      handleSessionExpired();
+      throw new Error('Session expired. Please login again.');
     }
     throw new Error('Failed to delete record.');
   }

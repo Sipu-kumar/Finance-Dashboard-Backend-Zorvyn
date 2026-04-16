@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Records from './pages/Records';
+import Reports from './pages/Reports';
 
 // Simple protected route - checks for JWT
 function ProtectedRoute({ children }) {
@@ -30,6 +31,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Records />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <Reports />
             </ProtectedRoute>
           }
         />
