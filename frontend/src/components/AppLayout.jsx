@@ -57,7 +57,7 @@ const navItems = [
   { icon: Icons.dashboard,  label: 'Dashboard', path: '/dashboard' },
   { icon: Icons.records,    label: 'Records',   path: '/records'   },
   { icon: Icons.analytics,  label: 'Reports',   path: '/reports'   },
-  { icon: Icons.performance,label: 'Performance', path: '#' },
+  { icon: Icons.performance,label: 'Performance', path: '/performance' },
   { icon: Icons.payment,    label: 'Payment',   path: '#' },
 ];
 
@@ -101,7 +101,11 @@ export default function AppLayout({ children, title }) {
         </nav>
 
         <div className="sidebar-bottom">
-          <button className="sidebar-item" id="nav-settings">
+          <button
+            className={`sidebar-item${location.pathname === '/settings' ? ' active' : ''}`}
+            id="nav-settings"
+            onClick={() => navigate('/settings')}
+          >
             {Icons.settings}
             Settings
           </button>
