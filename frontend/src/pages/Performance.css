@@ -1,0 +1,288 @@
+/* ─── Performance Page ─────────────────────────────────── */
+
+/* ─── Charts Row Layout ──────────────────────────────── */
+.perf-charts-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* ─── Chart Card ─────────────────────────────────────── */
+.perf-chart-card {
+  background: #0d1226;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  animation: perfFadeIn 0.5s ease;
+}
+
+@keyframes perfFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.perf-chart-wide {
+  flex: 1.5;
+}
+
+.perf-chart-card:not(.perf-chart-wide):not(.perf-chart-full) {
+  flex: 1;
+}
+
+.perf-chart-full {
+  flex: 1;
+  width: 100%;
+}
+
+/* ─── Chart Header ───────────────────────────────────── */
+.perf-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.perf-chart-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+/* ─── Period Buttons ─────────────────────────────────── */
+.perf-period-btns {
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.perf-period-btn {
+  padding: 6px 14px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.perf-period-btn:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.perf-period-btn.active {
+  background: #7B2FBE;
+  color: #fff;
+}
+
+/* ─── Chart Body ─────────────────────────────────────── */
+.perf-chart-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+}
+
+/* ─── SVG Charts ─────────────────────────────────────── */
+.balance-trend-svg,
+.comparison-chart-svg {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+}
+
+.chart-axis-label {
+  fill: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+.chart-empty {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Bar hover effect */
+.bar-rect {
+  transition: opacity 0.2s;
+}
+.bar-rect:hover {
+  opacity: 1 !important;
+}
+
+/* ─── Donut Chart ────────────────────────────────────── */
+.donut-container {
+  flex-direction: column;
+  gap: 16px;
+}
+
+.donut-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.donut-svg {
+  width: 200px;
+  height: 200px;
+}
+
+.donut-slice {
+  transition: opacity 0.2s, transform 0.2s;
+  transform-origin: center;
+}
+
+.donut-slice:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+
+.donut-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  justify-content: center;
+}
+
+.donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.donut-legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ─── Inline Legend ──────────────────────────────────── */
+.perf-legend-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.perf-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* ─── Category Table ─────────────────────────────────── */
+.perf-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.perf-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.perf-table td {
+  padding: 14px 16px;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.perf-table tr:last-child td {
+  border-bottom: none;
+}
+
+.perf-table tr {
+  transition: background 0.2s;
+}
+
+.perf-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.perf-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.perf-amount {
+  font-weight: 600;
+  color: #FF6B6B;
+}
+
+/* ─── Progress Bar in Table ──────────────────────────── */
+.perf-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perf-bar-fill {
+  height: 8px;
+  border-radius: 4px;
+  min-width: 4px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 1;
+  max-width: 160px;
+}
+
+.perf-bar-pct {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 44px;
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 992px) {
+  .perf-charts-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .perf-chart-card {
+    padding: 16px;
+  }
+
+  .perf-chart-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .donut-svg {
+    width: 160px;
+    height: 160px;
+  }
+}
