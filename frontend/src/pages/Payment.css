@@ -1,0 +1,642 @@
+/* ─── Payment Page ─────────────────────────────────────── */
+
+/* ─── Alerts ─────────────────────────────────────────── */
+.pay-alert {
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  animation: payFadeIn 0.3s ease;
+}
+
+@keyframes payFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pay-alert-success {
+  background: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.pay-alert-error {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+/* ─── Stats Row ──────────────────────────────────────── */
+.pay-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.pay-stat-card {
+  background: #0d1226;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: payFadeIn 0.4s ease;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.pay-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+.pay-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pay-stat-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.pay-stat-icon.green  { background: rgba(46, 204, 113, 0.12); color: #2ecc71; }
+.pay-stat-icon.blue   { background: rgba(52, 152, 219, 0.12); color: #3498db; }
+.pay-stat-icon.amber  { background: rgba(243, 156, 18, 0.12); color: #f39c12; }
+.pay-stat-icon.purple { background: rgba(123, 47, 190, 0.12); color: #9b59d0; }
+
+.pay-stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pay-stat-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.pay-stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+/* ─── Main Grid ──────────────────────────────────────── */
+.pay-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+}
+
+.pay-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── Panel Card ─────────────────────────────────────── */
+.pay-panel {
+  background: #0d1226;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  animation: payFadeIn 0.5s ease;
+}
+
+.pay-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pay-panel-header h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pay-panel-header h2 svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── Filter Buttons ─────────────────────────────────── */
+.pay-filter-group {
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pay-filter-btn {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pay-filter-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pay-filter-btn.active {
+  background: #7B2FBE;
+  color: #fff;
+}
+
+/* ─── New Payment Button ─────────────────────────────── */
+.pay-new-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #7B2FBE, #9B59D0);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(123, 47, 190, 0.3);
+}
+
+.pay-new-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(123, 47, 190, 0.45);
+}
+
+/* ─── Payment List ───────────────────────────────────── */
+.pay-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.pay-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 12px;
+  transition: background 0.2s;
+  gap: 12px;
+}
+
+.pay-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pay-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+}
+
+.pay-item-method-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pay-item-method-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pay-item-method-icon.upi            { background: rgba(46, 204, 113, 0.12); color: #2ecc71; }
+.pay-item-method-icon.card           { background: rgba(52, 152, 219, 0.12); color: #3498db; }
+.pay-item-method-icon.bank_transfer  { background: rgba(155, 89, 208, 0.12); color: #9b59d0; }
+.pay-item-method-icon.wallet         { background: rgba(243, 156, 18, 0.12); color: #f39c12; }
+
+.pay-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.pay-item-payee {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pay-item-meta {
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.pay-item-ref {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.2);
+  font-family: monospace;
+}
+
+.pay-item-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.pay-item-amount {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ff6b6b;
+  white-space: nowrap;
+}
+
+/* ─── Status Badge ───────────────────────────────────── */
+.pay-status-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.pay-status-badge.completed { background: rgba(46, 204, 113, 0.12); color: #2ecc71; }
+.pay-status-badge.pending   { background: rgba(243, 156, 18, 0.12); color: #f39c12; }
+.pay-status-badge.failed    { background: rgba(231, 76, 60, 0.12); color: #e74c3c; }
+.pay-status-badge.scheduled { background: rgba(52, 152, 219, 0.12); color: #3498db; }
+
+/* ─── Action Buttons ─────────────────────────────────── */
+.pay-item-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.pay-action-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pay-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.pay-action-btn.complete {
+  background: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+.pay-action-btn.complete:hover {
+  background: rgba(46, 204, 113, 0.2);
+}
+
+.pay-action-btn.delete {
+  background: rgba(231, 76, 60, 0.08);
+  color: #e74c3c;
+}
+.pay-action-btn.delete:hover {
+  background: rgba(231, 76, 60, 0.16);
+}
+
+/* ─── Quick Pay Methods ──────────────────────────────── */
+.pay-quick-methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pay-method-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.pay-method-chip svg {
+  width: 24px;
+  height: 24px;
+}
+
+.pay-method-chip:hover {
+  background: rgba(123, 47, 190, 0.08);
+  border-color: rgba(123, 47, 190, 0.3);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ─── Pay Form ───────────────────────────────────────── */
+.pay-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pay-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pay-form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.pay-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pay-input,
+.pay-select,
+.pay-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.pay-input:focus,
+.pay-select:focus,
+.pay-textarea:focus {
+  border-color: #7B2FBE;
+}
+
+.pay-input::placeholder,
+.pay-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.pay-select option {
+  background: #1a1f36;
+  color: #fff;
+}
+
+.pay-textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.pay-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.pay-submit-btn {
+  flex: 1;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7B2FBE, #9B59D0);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(123, 47, 190, 0.35);
+}
+
+.pay-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(123, 47, 190, 0.5);
+}
+
+.pay-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pay-cancel-btn {
+  padding: 11px 20px;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pay-cancel-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ─── Scheduled / Upcoming ───────────────────────────── */
+.pay-scheduled-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pay-scheduled-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.pay-scheduled-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pay-scheduled-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pay-scheduled-payee {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.pay-scheduled-date {
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.pay-scheduled-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pay-scheduled-amount {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #3498db;
+}
+
+/* ─── Empty States ───────────────────────────────────── */
+.pay-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.pay-empty-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.pay-empty-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pay-empty h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 6px;
+}
+
+.pay-empty p {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.pay-empty-sm {
+  padding: 24px;
+  text-align: center;
+}
+
+.pay-empty-sm p {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.pay-viewer-notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 20px;
+  text-align: center;
+}
+
+.pay-viewer-notice h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.pay-viewer-notice p {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────── */
+.pay-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pay-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pay-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+.pay-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .pay-grid {
+    grid-template-columns: 1fr;
+  }
+  .pay-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .pay-stats-row {
+    grid-template-columns: 1fr;
+  }
+  .pay-form-row {
+    grid-template-columns: 1fr;
+  }
+  .pay-panel {
+    padding: 16px;
+  }
+  .pay-quick-methods {
+    grid-template-columns: 1fr;
+  }
+}

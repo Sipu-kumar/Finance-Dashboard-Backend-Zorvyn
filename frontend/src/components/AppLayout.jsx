@@ -58,7 +58,7 @@ const navItems = [
   { icon: Icons.records,    label: 'Records',   path: '/records'   },
   { icon: Icons.analytics,  label: 'Reports',   path: '/reports'   },
   { icon: Icons.performance,label: 'Performance', path: '/performance' },
-  { icon: Icons.payment,    label: 'Payment',   path: '#' },
+  { icon: Icons.payment,    label: 'Payment',   path: '/payment' },
 ];
 
 export default function AppLayout({ children, title }) {
