@@ -6,6 +6,7 @@ import Records from './pages/Records';
 import Reports from './pages/Reports';
 import Performance from './pages/Performance';
 import Settings from './pages/Settings';
+import Payment from './pages/Payment';
 
 // Simple protected route - checks for JWT
 function ProtectedRoute({ children }) {
@@ -57,6 +58,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <ProtectedRoute>
+              <Payment />
             </ProtectedRoute>
           }
         />
